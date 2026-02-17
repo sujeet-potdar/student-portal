@@ -14,6 +14,65 @@ export type Database = {
   }
   public: {
     Tables: {
+      applications: {
+        Row: {
+          cgpa: number
+          created_at: string
+          id: string
+          opportunity_id: string
+          status: string
+          user_id: string
+        }
+        Insert: {
+          cgpa: number
+          created_at?: string
+          id?: string
+          opportunity_id: string
+          status?: string
+          user_id: string
+        }
+        Update: {
+          cgpa?: number
+          created_at?: string
+          id?: string
+          opportunity_id?: string
+          status?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "applications_opportunity_id_fkey"
+            columns: ["opportunity_id"]
+            isOneToOne: false
+            referencedRelation: "opportunities"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      opportunities: {
+        Row: {
+          created_at: string
+          created_by: string
+          id: string
+          min_cgpa: number
+          title: string
+        }
+        Insert: {
+          created_at?: string
+          created_by: string
+          id?: string
+          min_cgpa?: number
+          title: string
+        }
+        Update: {
+          created_at?: string
+          created_by?: string
+          id?: string
+          min_cgpa?: number
+          title?: string
+        }
+        Relationships: []
+      }
       profiles: {
         Row: {
           created_at: string
