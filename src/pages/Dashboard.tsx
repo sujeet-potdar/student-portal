@@ -1,11 +1,17 @@
+import { useState } from "react";
 import { useAuth } from "@/hooks/useAuth";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { LogOut, Shield, GraduationCap } from "lucide-react";
+import CreateOpportunityForm from "@/components/CreateOpportunityForm";
+import OpportunitiesList from "@/components/OpportunitiesList";
+import MyApplications from "@/components/MyApplications";
+import AdminApplications from "@/components/AdminApplications";
 
 const Dashboard = () => {
   const { user, role, signOut } = useAuth();
+  const [refreshKey, setRefreshKey] = useState(0);
 
   const isAdmin = role === "admin";
 
@@ -48,17 +54,14 @@ const Dashboard = () => {
         </Card>
 
         {isAdmin && (
-          <Card className="border-primary/20 bg-accent">
-            <CardHeader>
-              <CardTitle className="text-accent-foreground">Admin Panel</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <p className="text-sm text-muted-foreground">
-                You have admin privileges. Admin-specific features will appear here.
-              </p>
-            </CardContent>
-          </Card>
+          <CreateOpportunityForm onCreated={() => setRefreshKey((k) => k + 1)} />
         )}
+
+        <OpportunitiesList refreshKey={refreshKey} />
+
+        {!isAdmin && <MyApplications refreshKey={refreshKey} />}
+
+        {isAdmin && <AdminApplications />}
       </main>
     </div>
   );
