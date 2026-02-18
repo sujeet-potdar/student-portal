@@ -6,6 +6,8 @@ import { Badge } from "@/components/ui/badge";
 import { LogOut, Shield, GraduationCap } from "lucide-react";
 import CreateOpportunityForm from "@/components/CreateOpportunityForm";
 import OpportunitiesList from "@/components/OpportunitiesList";
+import MyApplications from "@/components/MyApplications";
+import AdminApplications from "@/components/AdminApplications";
 
 const Dashboard = () => {
   const { user, role, signOut } = useAuth();
@@ -56,6 +58,10 @@ const Dashboard = () => {
         )}
 
         <OpportunitiesList refreshKey={refreshKey} />
+
+        {!isAdmin && <MyApplications refreshKey={refreshKey} />}
+
+        {isAdmin && <AdminApplications />}
       </main>
     </div>
   );
